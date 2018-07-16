@@ -1,6 +1,5 @@
 package com.style.orange.service.impl;
 
-import com.style.orange.dao.SysRoleMapper;
 import com.style.orange.dao.SysUserMapper;
 import com.style.orange.model.SysUser;
 import com.style.orange.service.SysUserService;
@@ -40,5 +39,11 @@ public class SysUserServiceImpl implements SysUserService {
             sysUserMapper.insertSysUserRole(sysUser.getId(),sysUserVoForSave.getRoleId());
 
         }
+    }
+
+    @Override
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
+    public SysUser findByUserName(String username) {
+        return sysUserMapper.selectByUserName(username);
     }
 }

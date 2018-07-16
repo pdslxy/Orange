@@ -58,4 +58,12 @@ public interface SysUserMapper {
      * @param roleId
      */
     void insertSysUserRole(@Param("userId") String id, @Param("roleId") String roleId);
+
+    /**
+     * 根据登录名查询用户
+     *
+     * @param username
+     * @return
+     */
+    SysUser selectByUserName(String username);
 }

@@ -1,5 +1,6 @@
 package com.style.orange.service;
 
+import com.style.orange.model.SysUser;
 import com.style.orange.vo.SysUserVoForSave;
 
 /**
@@ -14,4 +15,13 @@ public interface SysUserService {
      * @param sysUserVoForSave
      */
     void saveOrUpdate(SysUserVoForSave sysUserVoForSave);
+
+
+    /**
+     * 根据用户名查询
+     *
+     * @param username
+     * @return
+     */
+    SysUser findByUserName(String username);
 }
