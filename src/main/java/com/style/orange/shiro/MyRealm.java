@@ -3,8 +3,6 @@ package com.style.orange.shiro;
 import com.style.orange.model.SysUser;
 import com.style.orange.service.SysUserService;
 import com.style.orange.utils.JwtUtil;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -23,7 +21,6 @@ import org.springframework.stereotype.Component;
  **/
 @Component
 public class MyRealm extends AuthorizingRealm {
-    private static final Logger LOGGER = LogManager.getLogger(MyRealm.class);
 
     @Autowired
     private SysUserService sysUserService;

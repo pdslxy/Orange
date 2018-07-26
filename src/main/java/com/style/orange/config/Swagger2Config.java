@@ -56,9 +56,9 @@ public class Swagger2Config {
 
     private ApiInfo apiInfo() {//接口的相关信息
         return new ApiInfoBuilder()
-                .title("Spring Boot中使用Swagger2构建RESTful接口")
+                .title("接口文档")
                 .description("接口描述")
-                .termsOfServiceUrl("termsOfServiceUrl")
+                .termsOfServiceUrl("Orange")
                 .contact(new Contact("Mr.Li", "", "pds_lxymmm@163.com"))
                 .version("1.0")
                 .license("http://springfox.github.io/springfox/docs/current/")

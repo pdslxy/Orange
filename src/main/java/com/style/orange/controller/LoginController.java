@@ -34,4 +34,5 @@ public class LoginController {
             throw new RuntimeException("密码错误");
         }
     }
+
 }

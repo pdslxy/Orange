@@ -15,11 +15,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * @author: PENG
- * @date: 2018/2/7
- * @description: shiro 配置类
- */
-
+ * @author Mr.Li
+ * @create 2018-07-12 15:56
+ * @desc
+ **/
 @Configuration
 public class ShiroConfig {
 
