@@ -4,7 +4,7 @@ import com.style.orange.service.SysUserService;
 import com.style.orange.vo.SysUserVoForSave;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,7 +20,7 @@ public class SysUserController {
     @Autowired
     private SysUserService sysUserService;
 
-    @PostMapping("/saveOrUpdate")
+    @PutMapping("/saveOrUpdate")
     @ApiOperation("保存或更新用户")
     public void saveOrUpdate(SysUserVoForSave sysUserVoForSave) {
         sysUserService.saveOrUpdate(sysUserVoForSave);

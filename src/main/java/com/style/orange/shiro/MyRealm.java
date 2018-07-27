@@ -1,6 +1,8 @@
 package com.style.orange.shiro;
 
+import com.style.orange.model.SysResource;
 import com.style.orange.model.SysUser;
+import com.style.orange.service.SysResourceService;
 import com.style.orange.service.SysUserService;
 import com.style.orange.utils.JwtUtil;
 import org.apache.shiro.authc.AuthenticationException;
@@ -14,6 +16,8 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * @author Mr.Li
  * @create 2018-07-12 15:23
@@ -25,6 +29,8 @@ public class MyRealm extends AuthorizingRealm {
     @Autowired
     private SysUserService sysUserService;
 
+    @Autowired
+    private SysResourceService sysResourceService;
 
     /**
      * 必须重写此方法，不然Shiro会报错
@@ -39,9 +45,13 @@ public class MyRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        String username = JwtUtil.getUsername(principals.toString());
-        SysUser user = sysUserService.findByUserName(username);
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
+        String username = JwtUtil.getUsername(principals.toString());
+        //根据用户名查询权限
+        List<SysResource> resourceList = sysResourceService.findResourceByUserName(username);
+        resourceList.parallelStream().forEach(sysResource -> {
+            simpleAuthorizationInfo.addStringPermission(sysResource.getPerms());
+        });
         return simpleAuthorizationInfo;
     }
 

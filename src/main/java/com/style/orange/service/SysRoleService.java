@@ -2,6 +2,8 @@ package com.style.orange.service;
 
 import com.style.orange.vo.SysRoleVoForSave;
 
+import java.util.List;
+
 /**
  * @author Mr.Li
  * @create 2018-07-10 13:58
@@ -14,4 +16,15 @@ public interface SysRoleService {
      * @param sysRoleVoForSave
      */
     void saveOrUpdate(SysRoleVoForSave sysRoleVoForSave);
+
+    /**
+     * 赋予权限
+     *
+     * @param roleId
+     * @param resourceIdList
+     */
+    void grantResource(String roleId, List<String> resourceIdList);
+
+
+
 }
