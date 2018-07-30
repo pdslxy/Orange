@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.style.orange.constant.OrangeConstant;
 
 import java.util.Date;
 
@@ -14,8 +15,6 @@ import java.util.Date;
  * @desc JWT工具类
  **/
 public class JwtUtil {
-
-    private static final long EXPIRE_TIME = 5 * 60 * 1000;
 
     /**
      * 校验token是否正确
@@ -61,13 +60,15 @@ public class JwtUtil {
      * @return 加密的token
      */
     public static String sign(String username, String secret) {
-        Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);
+        Date date = new Date(System.currentTimeMillis() + OrangeConstant.TOKEN_EXPIRE_TIME);
         Algorithm algorithm = Algorithm.HMAC256(secret);
-        // 附带username信息
-        return JWT.create()
+        String token = JWT.create()
                 .withClaim("username", username)
                 .withExpiresAt(date)
                 .sign(algorithm);
+
+        // 附带username信息
+        return token;
 
     }
 }

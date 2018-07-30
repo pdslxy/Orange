@@ -1,5 +1,7 @@
 package com.style.orange.shiro;
 
+import com.alibaba.fastjson.JSON;
+import com.style.orange.constant.OrangeConstant;
 import com.style.orange.model.SysResource;
 import com.style.orange.model.SysUser;
 import com.style.orange.service.SysResourceService;
@@ -14,9 +16,11 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Mr.Li
@@ -31,6 +35,9 @@ public class MyRealm extends AuthorizingRealm {
 
     @Autowired
     private SysResourceService sysResourceService;
+
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
     /**
      * 必须重写此方法，不然Shiro会报错
@@ -47,11 +54,20 @@ public class MyRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         String username = JwtUtil.getUsername(principals.toString());
-        //根据用户名查询权限
-        List<SysResource> resourceList = sysResourceService.findResourceByUserName(username);
-        resourceList.parallelStream().forEach(sysResource -> {
-            simpleAuthorizationInfo.addStringPermission(sysResource.getPerms());
-        });
+        List<SysResource> resourceList;
+        //从redis缓存中查询权限
+        String resourceStr = stringRedisTemplate.opsForValue().get(OrangeConstant.PREFIX_USER_PERMISSION + username);
+        if (resourceStr != null) {
+            resourceList = JSON.parseArray(resourceStr.toString(), SysResource.class);
+        } else {
+            //从数据库查询权限放到redis中
+            resourceList = sysResourceService.findResourceByUserName(username);
+            stringRedisTemplate.opsForValue().set(OrangeConstant.PREFIX_USER_PERMISSION + username, JSON.toJSONString(resourceList));
+        }
+        stringRedisTemplate.expire(OrangeConstant.PREFIX_USER_PERMISSION + username, OrangeConstant.TOKEN_EXPIRE_TIME, TimeUnit.MILLISECONDS);
+        if (resourceList != null) {
+            resourceList.parallelStream().forEach(sysResource -> simpleAuthorizationInfo.addStringPermission(sysResource.getPerms()));
+        }
         return simpleAuthorizationInfo;
     }
 
@@ -75,7 +91,6 @@ public class MyRealm extends AuthorizingRealm {
         if (!JwtUtil.verify(token, username, userBean.getPassword())) {
             throw new AuthenticationException("用户名或密码错误");
         }
-
         return new SimpleAuthenticationInfo(token, token, "my_realm");
     }
 }
