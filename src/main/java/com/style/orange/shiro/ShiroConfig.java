@@ -1,6 +1,5 @@
 package com.style.orange.shiro;
 
-import com.style.orange.filter.JwtFilter;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.mgt.SecurityManager;

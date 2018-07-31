@@ -1,6 +1,5 @@
 server:
-  session-timeout: 1800
-  port: 8888
+  port: 8088
   servlet:
     context-path: /orange
 spring:
@@ -29,3 +28,6 @@ spring:
     port: 6379
     password:
     timeout: 5000ms
+logging:
+  level:
+    com.style.orange: debug

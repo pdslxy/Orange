@@ -1,6 +1,5 @@
-package com.style.orange.filter;
+package com.style.orange.shiro;
 
-import com.style.orange.shiro.JwtToken;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMethod;

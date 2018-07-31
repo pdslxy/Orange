@@ -1,4 +1,4 @@
-package com.style.orange.utils;
+package com.style.orange.shiro;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;

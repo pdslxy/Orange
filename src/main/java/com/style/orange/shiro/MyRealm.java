@@ -2,11 +2,12 @@ package com.style.orange.shiro;
 
 import com.alibaba.fastjson.JSON;
 import com.style.orange.constant.OrangeConstant;
+import com.style.orange.enums.OrangeResultCode;
+import com.style.orange.exception.OrangeException;
 import com.style.orange.model.SysResource;
 import com.style.orange.model.SysUser;
 import com.style.orange.service.SysResourceService;
 import com.style.orange.service.SysUserService;
-import com.style.orange.utils.JwtUtil;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -64,6 +65,7 @@ public class MyRealm extends AuthorizingRealm {
             resourceList = sysResourceService.findResourceByUserName(username);
             stringRedisTemplate.opsForValue().set(OrangeConstant.PREFIX_USER_PERMISSION + username, JSON.toJSONString(resourceList));
         }
+        //设置过期时间
         stringRedisTemplate.expire(OrangeConstant.PREFIX_USER_PERMISSION + username, OrangeConstant.TOKEN_EXPIRE_TIME, TimeUnit.MILLISECONDS);
         if (resourceList != null) {
             resourceList.parallelStream().forEach(sysResource -> simpleAuthorizationInfo.addStringPermission(sysResource.getPerms()));
@@ -80,17 +82,18 @@ public class MyRealm extends AuthorizingRealm {
         // 解密获得username，用于和数据库进行对比
         String username = JwtUtil.getUsername(token);
         if (username == null) {
-            throw new AuthenticationException("token无效");
+            throw new OrangeException(OrangeResultCode.ERROR_TOKEN);
         }
 
         SysUser userBean = sysUserService.findByUserName(username);
         if (userBean == null) {
-            throw new AuthenticationException("用户不存在!");
+            throw new OrangeException(OrangeResultCode.ERROR_USER);
         }
 
         if (!JwtUtil.verify(token, username, userBean.getPassword())) {
-            throw new AuthenticationException("用户名或密码错误");
+            throw new OrangeException(OrangeResultCode.ERROR_PWD);
         }
-        return new SimpleAuthenticationInfo(token, token, "my_realm");
+
+        return new SimpleAuthenticationInfo(token, token, getName());
     }
 }

@@ -1,8 +1,10 @@
 package com.style.orange.controller;
 
+import com.style.orange.enums.OrangeResultCode;
+import com.style.orange.exception.OrangeException;
 import com.style.orange.model.SysUser;
 import com.style.orange.service.SysUserService;
-import com.style.orange.utils.JwtUtil;
+import com.style.orange.shiro.JwtUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +33,7 @@ public class LoginController {
             String token = JwtUtil.sign(username, password);
             return token;
         } else {
-            throw new RuntimeException("密码错误");
+            throw new OrangeException(OrangeResultCode.ERROR_PWD);
         }
     }
 
