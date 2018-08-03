@@ -23,6 +23,10 @@ spring:
     maxPoolPreparedStatementPerConnectionSize: 20
     filters: stat,wall,slf4j
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+  data:
+    elasticsearch:
+      cluster-name: escluster
+      cluster-nodes: 47.95.123.95:9300
   redis:
     host: 127.0.0.1
     port: 6379
