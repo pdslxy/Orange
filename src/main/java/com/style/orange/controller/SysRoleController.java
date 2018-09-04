@@ -22,7 +22,7 @@ import java.util.Arrays;
  **/
 @RestController
 @RequestMapping("/sysRole")
-@Api("角色接口")
+@Api(tags={"角色接口"})
 public class SysRoleController {
 
     @Autowired

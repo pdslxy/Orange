@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  **/
 @RestController
 @RequestMapping("/sysResource")
-@Api("角色接口")
+@Api(tags={"角色接口"})
 public class SysResourceController {
 
     @Autowired

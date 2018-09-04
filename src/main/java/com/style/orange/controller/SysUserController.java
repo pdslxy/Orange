@@ -2,6 +2,7 @@ package com.style.orange.controller;
 
 import com.style.orange.service.SysUserService;
 import com.style.orange.vo.SysUserVoForSave;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  **/
 @RestController
 @RequestMapping("/sysUser")
+@Api(tags={"用户接口"})
 public class SysUserController {
 
     @Autowired

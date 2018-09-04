@@ -20,7 +20,7 @@ import java.util.List;
  **/
 @RestController
 @RequestMapping("/es")
-@Api("ES接口")
+@Api(tags={"ES接口"})
 public class ElasticSearchController {
     @Autowired
     private ArticleSearchRepository articleSearchRepository;

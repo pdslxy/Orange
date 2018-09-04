@@ -13,7 +13,8 @@ public enum OrangeResultCode {
     ERROR_PWD(400, "用户名或密码错误"),
     ERROR_USER(400, "用户不存在"),
     ERROR_SYSTEM(500, "服务器错误"),
-    ERROR_TOKEN(401, "token无效");
+    ERROR_TOKEN(401, "token无效"),
+    ERROR_SENDMAIL(-1, "邮件发送失败!!");
 
 
     private int code;
