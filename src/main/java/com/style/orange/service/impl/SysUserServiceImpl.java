@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Mr.Li
@@ -45,5 +46,16 @@ public class SysUserServiceImpl implements SysUserService {
     @Transactional(readOnly = true, propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
     public SysUser findByUserName(String username) {
         return sysUserMapper.selectByUserName(username);
+    }
+
+    @Override
+    public List<SysUser> findAll() {
+        return sysUserMapper.selectAll();
+    }
+
+    @Override
+    public void deleteUser(String id) {
+        sysUserMapper.deleteSysUserRole(id);
+        sysUserMapper.deleteByPrimaryKey(id);
     }
 }

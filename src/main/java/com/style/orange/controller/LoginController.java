@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Mr.Li
@@ -55,5 +54,18 @@ public class LoginController {
         stringRedisTemplate.opsForHash().put("123", "asd", JSON.toJSONString(list));
         List<SysUser> userList = JSON.parseArray(stringRedisTemplate.opsForHash().get("123", "asd").toString(), SysUser.class);
         System.out.println(userList);
+    }
+
+    @GetMapping("/login/getInfo")
+    @ApiOperation("getInfo")
+    public Map<String, Object> getInfo() {
+        Map<String, Object> map = new HashMap<>(2);
+        Map<String, Object> map2 = new HashMap<>(3);
+        map2.put("avatar","https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
+        map2.put("name","admin");
+        map2.put("roles", Arrays.asList("admin"));
+        map.put("code",20000);
+        map.put("data",map2);
+        return map;
     }
 }

@@ -4,33 +4,20 @@ server:
     context-path: /orange
 spring:
   datasource:
-    type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/orange?serverTimezone=Hongkong&useUnicode=true&characterEncoding=utf8&useSSL=false
+    url: jdbc:mysql://106.13.48.204:3306/orange?serverTimezone=Hongkong&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
+#    url: jdbc:mysql://127.0.0.1:3306/orange?serverTimezone=Hongkong&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: 123456
-    initialSize: 1
-    minIdle: 3
-    maxActive: 20
-    maxWait: 60000
-    timeBetweenEvictionRunsMillis: 60000
-    minEvictableIdleTimeMillis: 30000
-    validationQuery: select 'x'
-    testWhileIdle: true
-    testOnBorrow: false
-    testOnReturn: false
-    poolPreparedStatements: true
-    maxPoolPreparedStatementPerConnectionSize: 20
-    filters: stat,wall,slf4j
-    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
-  data:
-    elasticsearch:
-      cluster-name: escluster
-      cluster-nodes: 127.0.0.1:9300
+#  data:
+#    elasticsearch:
+#      cluster-name: escluster
+#      cluster-nodes: 106.13.48.204:9300
   redis:
-    host: 127.0.0.1
+    host: 106.13.48.204
+#    host: 127.0.0.1
     port: 6379
-    password:
+    password: yun_redis
     timeout: 5000ms
   mail:
     host: smtp.qq.com #发送邮件服务器

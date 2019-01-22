@@ -60,10 +60,18 @@ public interface SysUserMapper {
     void insertSysUserRole(@Param("userId") String id, @Param("roleId") String roleId);
 
     /**
+     * 删除用户与角色关系
+     *
+     * @param userId     用户id
+     */
+    void deleteSysUserRole(@Param("userId") String userId);
+
+    /**
      * 根据登录名查询用户
      *
      * @param username
      * @return
      */
     SysUser selectByUserName(String username);
+
 }
