@@ -14,6 +14,8 @@ public enum OrangeResultCode {
     ERROR_USER(400, "用户不存在"),
     ERROR_SYSTEM(500, "服务器错误"),
     ERROR_TOKEN(401, "token无效"),
+
+    ERROR_ADMIN_DELETE(10010,"admin账号无法删除"),
     ERROR_SENDMAIL(-1, "邮件发送失败!!");
 
 
@@ -22,10 +24,6 @@ public enum OrangeResultCode {
 
     OrangeResultCode(int code, String msg) {
         this.code = code;
-        this.msg = msg;
-    }
-
-    OrangeResultCode(String msg) {
         this.msg = msg;
     }
 

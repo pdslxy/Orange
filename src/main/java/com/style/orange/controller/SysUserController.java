@@ -1,5 +1,6 @@
 package com.style.orange.controller;
 
+import com.style.orange.exception.OrangeException;
 import com.style.orange.model.SysUser;
 import com.style.orange.service.SysUserService;
 import com.style.orange.vo.SysUserVoForSave;
@@ -18,7 +19,7 @@ import java.util.List;
  **/
 @RestController
 @RequestMapping("/sysUser")
-@Api(tags={"用户接口"})
+@Api(tags = {"用户接口"})
 public class SysUserController {
 
     @Autowired
@@ -35,13 +36,17 @@ public class SysUserController {
     @ApiOperation("查询所有用户")
     @RequiresPermissions({"sys:user:get"})
     public List<SysUser> findAll() {
-       return sysUserService.findAll();
+        return sysUserService.findAll();
     }
 
     @DeleteMapping("/delete/{id}")
     @ApiOperation("删除用户")
     @RequiresPermissions({"sys:user:delete"})
-    public void delete(@PathVariable("id")String id) {
-       sysUserService.deleteUser(id);
+    public void delete(@PathVariable("id") String id) {
+        try {
+            sysUserService.deleteUser(id);
+        } catch (Exception e) {
+            OrangeException.throwException(e);
+        }
     }
 }

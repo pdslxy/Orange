@@ -35,7 +35,6 @@ public class ExceptionHandlerAdvice implements ResponseBodyAdvice {
     @ExceptionHandler(Exception.class)
     public Map<String, Object> handleException(Exception e, HttpServletRequest request) {
         Map<String, Object> map = new LinkedHashMap<>(2);
-        e.printStackTrace();
         map.put("code", OrangeResultCode.ERROR_SYSTEM.getCode());
         map.put("msg", OrangeResultCode.ERROR_SYSTEM.getMsg());
         return map;

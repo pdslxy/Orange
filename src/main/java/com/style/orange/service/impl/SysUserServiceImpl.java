@@ -1,6 +1,9 @@
 package com.style.orange.service.impl;
 
+import com.style.orange.constant.OrangeConstant;
 import com.style.orange.dao.SysUserMapper;
+import com.style.orange.enums.OrangeResultCode;
+import com.style.orange.exception.OrangeException;
 import com.style.orange.model.SysUser;
 import com.style.orange.service.SysUserService;
 import com.style.orange.vo.SysUserVoForSave;
@@ -37,7 +40,7 @@ public class SysUserServiceImpl implements SysUserService {
             sysUser.setCreateDate(new Date());
             sysUserMapper.insert(sysUser);
             //保存用户与角色关联关系
-            sysUserMapper.insertSysUserRole(sysUser.getId(),sysUserVoForSave.getRoleId());
+            sysUserMapper.insertSysUserRole(sysUser.getId(), sysUserVoForSave.getRoleId());
 
         }
     }
@@ -55,6 +58,10 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Override
     public void deleteUser(String id) {
+        SysUser sysUser = sysUserMapper.selectByPrimaryKey(id);
+        if (OrangeConstant.ADMIN.equalsIgnoreCase(sysUser.getUserName())) {
+            throw new OrangeException(OrangeResultCode.ERROR_ADMIN_DELETE);
+        }
         sysUserMapper.deleteSysUserRole(id);
         sysUserMapper.deleteByPrimaryKey(id);
     }

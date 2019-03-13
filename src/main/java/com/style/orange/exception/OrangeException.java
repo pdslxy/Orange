@@ -18,4 +18,12 @@ public class OrangeException extends RuntimeException {
     public OrangeResultCode getOrangeResultCode() {
         return orangeResultCode;
     }
+
+    public static void throwException(Exception e){
+        if (e instanceof OrangeException) {
+            throw new OrangeException(((OrangeException) e).getOrangeResultCode());
+        } else {
+            throw new RuntimeException();
+        }
+    }
 }

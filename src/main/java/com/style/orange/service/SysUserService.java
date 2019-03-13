@@ -36,6 +36,7 @@ public interface SysUserService {
     /**
      * 删除用户
      * @param id
+     * @throws Exception
      */
-    void deleteUser(String id);
+    void deleteUser(String id) throws Exception;
 }
